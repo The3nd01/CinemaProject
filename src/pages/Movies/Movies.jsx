@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Searcher from "../../components/Searcher";
+import Scripts from "../../services/Scripts";
 
 function Movies() {
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -8,17 +9,8 @@ function Movies() {
 
   const fetchPopularMovies = async () => {
     try {
-      const apiKey = "fc34ec9e32f4eac02ad17849d5298c80"; // Reemplaza con tu propia clave de API TMDb
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setPopularMovies(data.results);
-      } else {
-        console.error("Error fetching popular movies:", response.statusText);
-      }
+      const popularMovies = await Scripts.fetchPopularMovies();
+      setPopularMovies(popularMovies);
     } catch (error) {
       console.error("Error fetching popular movies:", error);
     }
@@ -26,17 +18,8 @@ function Movies() {
 
   const handleSearch = async (searchTerm) => {
     try {
-      const apiKey = "fc34ec9e32f4eac02ad17849d5298c80"; // Reemplaza con tu propia clave de API TMDb
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setFilteredMovies(data.results);
-      } else {
-        console.error("Error fetching filtered movies:", response.statusText);
-      }
+        const filteredMovies = await Scripts.fetchSearchMovies(searchTerm);
+        setFilteredMovies(filteredMovies);
     } catch (error) {
       console.error("Error fetching filtered movies:", error);
     }

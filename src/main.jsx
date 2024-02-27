@@ -13,6 +13,8 @@ import Home from './pages/Home/Home';
 import Movies from './pages/Movies/Movies'
 import { Footer } from './components/Footer';
 import MovieDetails from './pages/MovieDetails/MovieDetails';
+import FavPage from './pages/FavPage/FavPage';
+import Tickets from './pages/Tickets/Tickets';
 
 function AppLayout() {
   return <>
@@ -36,6 +38,12 @@ const router = createBrowserRouter([
     },{
       path: "/pelicula/:id",
       element: <MovieDetails />,
+    },{
+      path: "/favoritos",
+      element: <FavPage />,
+    },{
+      path: "/tickets",
+      element: <Tickets />,
     }]
   }
 ]);

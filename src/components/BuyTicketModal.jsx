@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function BuyTicketModal({ isOpen, onClose, img }) {
+function BuyTicketModal({ isOpen, onClose, img, onBuyTicket }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSeat, setSelectedSeat] = useState(null);
 
@@ -20,7 +20,18 @@ function BuyTicketModal({ isOpen, onClose, img }) {
     // Puedes agregar lógica adicional aquí, como enviar la compra al backend
   };
 
-  const seats = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3","D1", "D2", "D3"];
+  const handleBuyTicket = () => {
+    const ticketInfo = {
+      date: selectedDate,
+      seat: selectedSeat,
+    };
+    // Llamar a la función para manejar la compra de la entrada
+    onBuyTicket(ticketInfo);
+    // Cerrar el modal después de comprar la entrada
+    closeModal();
+  };
+
+  const seats = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "D3"];
 
   return (
     <Modal
@@ -75,7 +86,7 @@ function BuyTicketModal({ isOpen, onClose, img }) {
         </div>
         <div className="modal-footer flex justify-center">
           <button
-            onClick={closeModal}
+            onClick={handleBuyTicket} // Llamar a la función de compra al hacer clic
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
           >
             Comprar
@@ -87,8 +98,3 @@ function BuyTicketModal({ isOpen, onClose, img }) {
 }
 
 export default BuyTicketModal;
-
-
-
-
-
